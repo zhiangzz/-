@@ -1,0 +1,130 @@
+class ListNode:
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+ 设计链表
+ 储存不连续
+ 
+ 203 移除链表
+ # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+虚拟头节点， 添加指针curr
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        dummy =  ListNode()
+        dummy.next = head
+        curr = dummy
+        while curr.next:
+            if curr.next.val == val:
+                curr.next = curr.next.next
+            else:
+                curr = curr.next
+        return dummy.next
+  707要看边界值！！
+  class Node:
+    def __init__(self, val=0):
+        self.val = val
+        self.next = None
+
+class MyLinkedList:
+
+    def __init__(self):
+        self.head = Node()
+        self.size = 0
+
+    def get(self, index: int) -> int:
+        if index<0 or index>= self.size:
+            return -1
+        cur =  self.head.next
+        while index:
+            cur = cur.next
+            index -= 1
+        return cur.val
+
+    def addAtHead(self, val: int) -> None:
+        new = Node(val)
+        new.next = self.head.next
+        self.head.next = new
+        self.size += 1
+
+
+    def addAtTail(self, val: int) -> None:
+        new = Node(val)
+        cur = self.head
+        while cur.next:
+            cur = cur.next
+        cur.next = new
+        self.size += 1
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index<0:
+            self.addAtHead(val)
+            return
+        elif index>self.size:
+            return
+        elif index==self.size:
+            self.addAtTail(val)
+            return
+        cur = self.head
+        while index:
+            cur = cur.next
+            index -= 1
+        new = Node(val)
+        new.next = cur.next
+        cur.next = new
+        self.size += 1
+
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index<0 or index>=self.size:
+            return -1
+        cur = self.head
+        while index:
+            cur = cur.next
+            index -= 1
+        cur.next = cur.next.next
+        self.size -= 1
+
+
+
+# Your MyLinkedList object will be instantiated and called as such:
+# obj = MyLinkedList()
+# param_1 = obj.get(index)
+# obj.addAtHead(val)
+# obj.addAtTail(val)
+# obj.addAtIndex(index,val)
+# obj.deleteAtIndex(index)
+206
+双指针写法 每次都反转指针， 然后移动到下一个
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev = None
+        curr = head
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev
+      
+        递归写法核心思想还是双指针
+        class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        
+        def reverse(pre,cur):
+            if not cur:
+                return pre
+                
+            tmp = cur.next
+            cur.next = pre
+
+            return reverse(cur,tmp)
+        
+        return reverse(None,head)

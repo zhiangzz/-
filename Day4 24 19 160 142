@@ -1,0 +1,102 @@
+24 两两交换链表中的节点 
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy =  ListNode()
+        dummy.next = head
+        curr = dummy
+        while (curr.next and curr.next.next):
+            temp = curr.next
+            temp1 = curr.next.next.next
+            curr.next = curr.next.next
+            curr.next.next = temp
+            curr.next.next.next = temp1
+            curr = curr.next.next
+
+        return dummy.next
+   首先是截止条件 分奇数点和偶数点 其次要有一个虚拟节点
+   
+   19 删除链表中的倒数第N个节点
+   快慢指针 删除的节点在删除的前一个节点
+   # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode()
+        dummy.next = head
+        slow = fast = dummy
+        while n!=0:
+            fast = fast.next
+            n -= 1
+
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+        slow.next = slow.next.next
+        return dummy.next
+160 链表相交
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        A = headA
+        B = headB
+        lenA = lenB = 0
+        while A:
+            A = A.next
+            lenA += 1
+        while B:
+            B = B.next
+            lenB += 1
+        gap = abs(lenA-lenB)
+        curA,curB = headA,headB
+        if lenA>lenB:
+            curA,curB = curB,curA
+            lenA,lenB = lenB,lenA
+        while gap:
+            curB = curB.next
+            gap -= 1
+        while curA:
+            if curA == curB:
+                return curA
+            else:
+                curA = curA.next
+                curB = curB.next
+        return None
+快慢指针，计算长度， 本质和上一题一样
+142 环形节点 这个逻辑稍微难一些 需要推理 还是快慢指针 从起点相遇点分别同样速度出发，则他们的相遇的位置就是入口。
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow==fast:
+                q = head
+                p = fast
+                while q!=p:
+                    q = q.next
+                    p = p.next
+                return p
+        return None
+            
+
+        
+        

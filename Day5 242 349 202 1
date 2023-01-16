@@ -1,0 +1,59 @@
+242 异位词
+数量相同，字母相同
+ord返回asii码，数量少的就用数组就可（list)
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        hasharray = [0]*26
+        for i in s:
+            hasharray[ord(i)-ord("a")] += 1
+
+        for j in t:
+            hasharray[ord(j)-ord("a")] -= 1
+        for h in hasharray:
+            if h != 0:
+                return False
+        return True
+349 共同元素
+这题目要求是找共同的元素
+用dict方法时间比较长，所以并不是每道题都用这个的，如上面还是用数组比较好
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        hashmap = dict()
+        res = []
+        for i in nums1:
+            hashmap[i]=1
+        for i in nums2:
+            if i in hashmap.keys() and hashmap[i]==1:
+                res.append(i)
+                hashmap[i]=0
+        return res
+ 202 快乐数
+ 关键如何取数，还有record的作用
+ class Solution:
+    def isHappy(self, n: int) -> bool:
+        def calculate_happy(num):
+            sum_ = 0
+            while num:
+                sum_ += (num % 10) ** 2
+                num = num // 10
+            return sum_
+
+        record = set()
+
+        while True:
+            n = calculate_happy(n)
+            if n == 1:
+                return True
+            if n in record:
+                return False
+            else:
+                record.add(n)
+ 1 两数之和
+ 非常经典的一道题，使用hashmap
+ class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        hashmap = {}
+        for index, val in enumerate(nums):
+            if target-val in hashmap.keys():
+                return   [index,hashmap[target-val]]
+            hashmap[val]=index

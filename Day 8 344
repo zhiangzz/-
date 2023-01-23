@@ -11,3 +11,61 @@ class Solution:
             s[l],s[r]=s[r],s[l]
             l+=1
             r-=1
+ 541：与上题类似，关键是按照题目要求解答
+class Solution:
+    def reverseStr(self, s: str, k: int) -> str:
+        def reverse(s):
+            l,r= 0,len(s)-1
+            while l<r:
+                s[l],s[r] = s[r],s[l]
+                l += 1
+                r -= 1
+            return s
+        ans = list(s)
+        for i in range(0,len(s),2*k):
+            ans[i:i+k] = reverse(ans[i:i+k])
+        return "".join(ans)
+题目：剑指Offer 05.替换空格 
+ class Solution:
+    def replaceSpace(self, s: str) -> str:
+        counter = s.count(' ')
+        
+        res = list(s)
+        # 每碰到一个空格就多拓展两个格子，1 + 2 = 3个位置存’%20‘
+        res.extend([' '] * counter * 2)
+        
+        # 原始字符串的末尾，拓展后的末尾
+        left, right = len(s) - 1, len(res) - 1
+        
+        while left >= 0:
+            if res[left] != ' ':
+                res[right] = res[left]
+                right -= 1
+            else:
+                # [right - 2, right), 左闭右开
+                res[right - 2: right + 1] = '%20'
+                right -= 3
+            left -= 1
+        return ''.join(res)
+            
+151 翻转字符 我觉得还是这样比较容易理解
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        lists = s.split()
+        l,r=0,len(lists)-1
+        while l<r:
+            lists[l],lists[r] = lists[r],lists[l]
+            l+=1
+            r-=1
+        return " ".join(lists)
+题目：剑指Offer58-II.左旋转字符串
+解法很妙
+
+class Solution:
+    def reverseLeftWords(self, s: str, n: int) -> str:
+        s = list(s)
+        s[0:n] = list(reversed(s[0:n]))
+        s[n:] = list(reversed(s[n:]))
+        s.reverse()
+        
+        return "".join(s)

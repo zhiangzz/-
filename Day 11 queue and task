@@ -1,0 +1,46 @@
+20. 有效的括号
+class Solution:
+    def isValid(self, s: str) -> bool:
+        d = {"(":")","{":"}","[":"]"}
+        stack = []
+        for m in s:
+            if m in d:
+                stack.append(d[m])
+            elif not stack or stack[-1] != m:
+                return False
+            else:
+                stack.pop()
+        return True if not stack else False
+关键是搞清楚几种情况 ！！！
+1047. Remove All Adjacent Duplicates In String
+对对碰 用stack
+class Solution:
+    def removeDuplicates(self, s: str) -> str:
+        stack = []
+        for char in s:
+            if stack and stack[-1]==char:
+                stack.pop()
+            else:
+                stack.append(char)
+        return "".join(stack)
+ 150. Evaluate Reverse Polish Notation 逆波兰表达式
+ 逆波兰表达式实际上就是二叉树的后续继承的表达方式！！！
+ class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        stack = []
+        for t in tokens:
+            if t == "-" or t=="+" or t=="*" or t=="/":
+                nums1 = stack.pop()
+                nums2 = stack.pop()
+                if t=="+":
+                    stack.append(nums1+nums2)
+                elif t=='-':
+                    stack.append(nums2-nums1)
+                elif t=='/':
+                    stack.append(int(nums2/nums1))
+                else:
+                    stack.append(nums2*nums1)
+            else:
+                stack.append(int(t))
+        return stack.pop()
+               

@@ -33,3 +33,20 @@ class Solution:
             que.push(nums[i]) #滑动窗口前加入最后面的元素
             result.append(que.front()) #记录对应的最大值
         return result
+
+347. Top K Frequent Elements
+频率问题可用堆
+import heapq
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        map_ = {}
+        res = []
+        for i in range(len(nums)):
+            map_[nums[i]] = map_.get(nums[i],0) + 1
+        heap = []
+        for key,val in map_.items():
+            heapq.heappush(heap, (-val,key))
+        for i in range(k):
+            val, key = heapq.heappop(heap)
+            res.append(key)
+        return res
